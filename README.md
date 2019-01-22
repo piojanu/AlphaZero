@@ -5,7 +5,7 @@ Implementation of [AlphaZero paper](https://arxiv.org/abs/1712.01815) using [Hum
 framework. Allows to easily train an AlphaZero model to play board games, such as Tic-Tac-Toe, Othello, Connect 4
 or Go Bang (Gomoku).
 
-Trained checkpoints for Tic-Tac-Toe, Othello and Connect 4 can be found [here](https://www.dropbox.com/s/alx0fv32xh2m21s/Checkpoints.zip?dl=0).
+**Trained checkpoints for Tic-Tac-Toe, Othello and Connect 4 can be found [here](https://www.dropbox.com/s/alx0fv32xh2m21s/Checkpoints.zip?dl=0).**
 
 ## Getting started
 Clone this repository and install requirements: `pip install -r requirements.txt`
