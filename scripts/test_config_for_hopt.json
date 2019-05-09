@@ -1,0 +1,49 @@
+{
+    "neural_net": {
+        "conv_filters"             : 16,
+        "conv_kernel"              : 2,
+        "conv_stride"              : 1,
+        "residual_bottleneck"      : 16,
+        "residual_filters"         : 16,
+        "residual_kernel"          : 2,
+        "residual_num"             : 1,
+        "feature_extractor"        : "agz",
+        "dense_size"               : 16,
+        "loss"                     : ["categorical_crossentropy", "mean_squared_error"],
+        "l2_regularizer"           : 0.0001,
+        "lr"                       : [0.02, 0.1],
+        "momentum"                 : 0.9
+    },
+    "training": {
+        "batch_size"               : 16,
+        "epochs"                   : 5,
+        "save_training_log_path"   : "./logs/training.log"
+    },
+    "planner": {
+        "c"                        : 1.0,
+        "dirichlet_noise"          : 0.3,
+        "noise_ratio"              : 0.25,
+        "gamma"                    : -1.0,
+        "n_simulations"            : 5
+    },
+    "logging": {
+        "save_checkpoint_folder"   : "./checkpoints/test",
+        "tensorboard_log_folder"   : "./logs/tensorboard",
+        "save_self_play_log_path"  : "./logs/self-play.log",
+        "save_tournament_log_path" : "./logs/tournament.log",
+        "save_elo_scoreboard_path" : "./logs/scoreboard.csv"
+    },
+    "storage": {
+        "exp_replay_size"          : 200000,
+        "save_data_path"           : "./checkpoints/data.examples"
+    },
+    "self_play": {
+        "game"                     : "tictactoe",
+        "max_iter"                 : 10,
+        "min_examples"             : 0,
+        "policy_warmup"            : 12,
+        "n_self_plays"             : 2,
+        "n_tournaments"            : 2,
+        "update_threshold"         : 0.0
+     }
+}
