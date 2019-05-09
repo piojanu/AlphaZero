@@ -2,7 +2,7 @@ import pandas as pd
 
 from common_utils import Storage
 from env import BoardState
-from humblerl import Callback, Mind, Vision
+from humblerl import Callback, Mind, Interpreter
 
 
 class AdversarialMinds(Mind, Callback):
@@ -47,7 +47,7 @@ class AdversarialMinds(Mind, Callback):
             self.clear_tree()
 
 
-class BoardVision(Vision):
+class BoardInterpreter(Interpreter):
     """Transforms board game state and reward to canonical one.
 
     Args:

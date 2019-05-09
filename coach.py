@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 from keras.callbacks import TensorBoard
 
 from algos.alphazero import Planner
-from algos.board_games import AdversarialMinds, BoardStorage, BoardVision
+from algos.board_games import AdversarialMinds, BoardStorage, BoardInterpreter
 from nn import build_keras_trainer
 from metrics import Tournament
 from humblerl.callbacks import BasicStats, CSVSaverWrapper
@@ -26,7 +26,7 @@ class Coach(object):
     Attributes:
         cfg (Config): Configuration loaded from .json file.
         env (hrl.Environment): Environment to play in.
-        vision (hrl.Vision): state and reward preprocessing.
+        interpreter (hrl.Interpreter): state and reward preprocessing.
         best_nn (NeuralNet): Value and Policy network of best agent.
         current_nn (NeuralNet): Value and Policy network of current agent.
         best_mind (hrl.Mind): Best agent's mind.
@@ -44,7 +44,7 @@ class Coach(object):
         self.cfg = config
         self.env = self.cfg.env
 
-        self.vision = BoardVision(self.cfg.game)
+        self.interpreter = BoardInterpreter(self.cfg.game)
 
         self.best_nn = build_keras_trainer(self.cfg.game, self.cfg)
         self.current_nn = build_keras_trainer(self.cfg.game, self.cfg)
@@ -101,7 +101,7 @@ class Coach(object):
             desc (str): Progress bar description.
         """
 
-        hrl.loop(self.env, self.best_mind, self.vision, policy='proportional', trian_mode=True,
+        hrl.loop(self.env, self.best_mind, self.interpreter, policy='proportional', trian_mode=True,
                  warmup=self.cfg.self_play['policy_warmup'],
                  debug_mode=self.cfg.debug, n_episodes=self.cfg.self_play['n_self_plays'],
                  name=desc, verbose=1,
@@ -133,7 +133,7 @@ class Coach(object):
         """
         # Clear current agent tree and evaluate it
         self.current_mind.clear_tree()
-        hrl.loop(self.env, self.current_mind, self.vision, policy='deterministic', train_mode=False,
+        hrl.loop(self.env, self.current_mind, self.interpreter, policy='deterministic', train_mode=False,
                  debug_mode=self.cfg.debug, render_mode=render_mode,
                  n_episodes=n_games if n_games else self.cfg.self_play['n_tournaments'], name=desc,
                  verbose=2, callbacks=[self.scoreboard, *self.eval_callbacks])
