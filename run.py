@@ -6,7 +6,7 @@ import numpy as np
 import utils
 
 from algos.alphazero import Planner
-from algos.board_games import AdversarialMinds, BoardRender, BoardStorage, BoardVision, ELOScoreboard
+from algos.board_games import AdversarialMinds, BoardRender, BoardStorage, BoardInterpreter, ELOScoreboard
 from algos.human import HumanPlayer
 from coach import Coach
 from common_utils import TensorBoardLogger, mute_tf_logs_if_needed
@@ -272,8 +272,8 @@ def cross_play(ctx, checkpoints_dir, gap, second_config):
     cfg = ctx.obj
     second_cfg = Config(second_config) if second_config is not None else cfg
 
-    # Create board games vision
-    vision = BoardVision(cfg.game)
+    # Create board games interpreter
+    interpreter = BoardInterpreter(cfg.game)
 
     # Set checkpoints_dir if not passed
     if checkpoints_dir is None:
@@ -325,7 +325,7 @@ def cross_play(ctx, checkpoints_dir, gap, second_config):
             first_player.clear_tree()
             second_player.clear_tree()
 
-            hrl.loop(cfg.env, players, vision, policy='deterministic', n_episodes=2,
+            hrl.loop(cfg.env, players, interpreter, policy='deterministic', n_episodes=2,
                      train_mode=False, name="{} vs {}".format(first_player_id, second_player_id),
                      callbacks=[tournament, cfg.env])
 
