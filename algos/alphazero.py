@@ -118,13 +118,12 @@ class Planner(Callback, Mind):
             if len(valid_moves) != 0:
                 probs = np.zeros_like(pi)
                 probs[valid_moves] = pi[valid_moves]
-                sum_probs = np.sum(probs)
-                if sum_probs <= 0:
+                if np.sum(probs) <= 0:
                     # If all valid moves were masked make all valid moves equally probable
                     log.warning("All valid moves were masked, do workaround!")
                     probs[valid_moves] = 1
                 # Normalize probabilities
-                probs = probs / sum_probs
+                probs = probs / np.sum(probs)
 
                 # Fill this node edges with priors
                 for m in valid_moves:
