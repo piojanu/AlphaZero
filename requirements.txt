@@ -14,7 +14,7 @@ scikit_learn==0.20.0
 scipy==1.1.0
 setuptools==36.2.7
 tabulate==0.8.2
-tensorflow==1.9.0
+tensorflow==2.5.0
 torch==0.4.1
 tqdm==4.23.4
 -e git+https://github.com/piojanu/humblerl.git@79900c4087450711ca5e52063e75d081cc99e34c#egg=humblerl
